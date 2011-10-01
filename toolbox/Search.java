@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 public class Search {
 
-    String pattern;
+    String pattern[];
     int count = 0;
     ArrayList paths = new ArrayList<String>();
 
-    public Search(String pattern) {
+    public Search(String[] pattern) {
         this.pattern = pattern;
     }
 
@@ -33,29 +33,31 @@ public class Search {
                 if (listFile[i].isDirectory()) {
                     findFilTypeAntal(listFile[i]);
                 } else {
-                    if (listFile[i].getName().endsWith(pattern)) {
-                        paths.add(listFile[i].getPath());                        
-                        count++;
+                    for (int j = 0; j < pattern.length; j++) {
+                        if (listFile[i].getName().endsWith(pattern[j])) {
+                            paths.add(listFile[i].getPath().replace('\\', '/'));
+                            count++;
+                        }
                     }
                 }
             }
         }
     }
-    
-    public ArrayList<String> getPaths(){
+
+    public ArrayList<String> getPaths() {
         return paths;
     }
 
     @Override
     public String toString() {
-        return getpathString() + "\nA Total of: \r" + count +"\r file(s) where found";
+        return "A Total of: \r" + count + "\r file(s) where found";
     }
-    
-    private String getpathString(){
+
+    private String getpathString() {
         String temp = "";
-        for(int i = 0; i<paths.size();i++){
-            temp += paths.get(i) +"\n";
-        }        
+        for (int i = 0; i < paths.size(); i++) {
+            temp += paths.get(i) + "\n";
+        }
         return temp;
     }
 }

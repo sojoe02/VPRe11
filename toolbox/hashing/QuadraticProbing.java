@@ -173,7 +173,7 @@ public class QuadraticProbing<AnyType> implements Constants {
         if (hashVal < 0) {
             hashVal += tableSize;
         }
-        System.out.println(hashVal);
+        //System.out.println(hashVal);
         return hashVal;
     }
 
