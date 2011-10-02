@@ -28,28 +28,59 @@ public class VPR {
 
     public static void main(String args[]) throws FileNotFoundException {
 
-        //initializing HashSet:
+        //Path to look for files.
+        String testPath="";
 
 
+        if (args.length > 1) {
+            testPath = args[1];
+        }
+        
+        //Check of operating system linux or windows (havent bothered with mac):
+        if (args.length == 0) {
+            
+            String os = System.getProperty("os.name").toLowerCase();
+            
+            if(os.indexOf( "win" ) >= 0){
+               testPath="C:"; //c drive for windows
+            }
+            else if(os.indexOf( "nix") >=0 || os.indexOf( "nux") >=0){
+               testPath=System.getProperty("user.home"); //homedir for nix user
+            }
+        }
+        
+        //the extensions to look for:
         String pattern[] = {".mp3", ".flac"};
 
         Search searcher = new Search(pattern);
-
+        //Initialize the hashsets:
         SeperateChaining chainHashing = new SeperateChaining<String>();
         QuadraticProbing quadHashing = new QuadraticProbing<String>();
-
-        searcher.findFilTypeAntal(new File("//MOODY/Music"));
-
+        
+        //Start the search on the designated path:
+        searcher.findFilTypeAntal(new File(testPath));
+        
+        //Print the searchers toString:
         System.out.println(searcher);
 
         //Get the searching paths in an array:
         ArrayList paths = searcher.getPaths();
 
-
+        
+        /*
+         * Starting the testing, first is insertions.
+         */
+             
         System.out.println("Testing, time of insertion of the different methods.");
 
         System.out.print("Testing insertion of Seperate Chaining Hashing:\t");
+        /*
+         * First up is Seperate Chaining.
+         */
+        
+        //read system nanotime to get as precise a reading as possible.        
         long testtime = System.nanoTime();
+        
         for (int i = 0; i < paths.size(); i++) {
             chainHashing.insert(paths.get(i));
         }
@@ -59,7 +90,7 @@ public class VPR {
 
 
         /*
-         * Test Quadratic insertion:
+         * Test Quadratic insertion.
          */
         testtime = System.nanoTime();
         System.out.print("Testing insertion of Quadratic Hashing:\t\t");
@@ -80,11 +111,12 @@ public class VPR {
         System.out.println(testtime / 1000000 + "." + testtime % 1000000 + " ms");
 
         /*
-         * Test search times:  with random path in the result array       */
+         * Test search times:  with random path in the result array       
+         */
+        
         Random generator = new Random();
         String testString = paths.get(generator.nextInt(paths.size())).toString();
-
-
+        
 
         System.out.println("\nTesting, timing search of the different methods.");
 
@@ -111,28 +143,36 @@ public class VPR {
         if (hashSet.contains(testString)) {
             System.out.print("file found on:\t ");
         }
-        
+
         testtime = System.nanoTime() - testtime;
         System.out.println(testtime + " ns");
 
         System.out.print("Testing ArrayList (Javas implementation):\t");
         testtime = System.nanoTime();
         if (paths.contains(testString)) {
-        System.out.print("file found on:\t ");
+            System.out.print("file found on:\t ");
         }
-        
+
         testtime = System.nanoTime() - testtime;
 
         System.out.println(testtime + " ns");
-        /*try {
+        try {
             silentTesting(10, chainHashing, quadHashing, hashSet, paths);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(VPR.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(VPR.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
 
     }
+    
+    /*
+     * Function to to some silent testing and then write the timing results into
+     * a comma seperated file (csv) for plotting purposes.
+     * 
+     * @param iteratorvalue=number of iterations, then the three different 
+     * hashsets and the arraylist
+     */
 
     private static void silentTesting(int iteratorValue, SeperateChaining chainHashing,
             QuadraticProbing quadHashing, Set hashSet, ArrayList paths) throws FileNotFoundException, UnsupportedEncodingException, IOException {
@@ -142,13 +182,12 @@ public class VPR {
             BufferedWriter out = new BufferedWriter(new FileWriter("test.csv"));
             for (int i = 0; i < iteratorValue; i++) {
                 String testString = paths.get(generator.nextInt(paths.size())).toString();
-                System.out.println(testString);
+                
+                System.gc();
 
                 testtime = System.nanoTime();
                 chainHashing.find(testString);
                 testtime = System.nanoTime() - testtime;
-                
-                System.out.println(testtime);
 
                 out.write(Long.toString(testtime) + ",");
 
@@ -160,14 +199,14 @@ public class VPR {
 
                 testtime = System.nanoTime();
                 hashSet.contains(testString);
-                testtime = System.nanoTime() - testtime;                
+                testtime = System.nanoTime() - testtime;
 
                 out.write(Long.toString(testtime) + ",");
-                
+
                 testtime = System.nanoTime();
                 paths.contains(testString);
                 testtime = System.nanoTime() - testtime;
-                
+
                 out.write(Long.toString(testtime));
                 out.newLine();
             }
