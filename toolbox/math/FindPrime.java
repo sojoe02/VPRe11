@@ -4,10 +4,6 @@
  */
 package toolbox.math;
 
-/**
- *
- * @author sojoe
- */
 public class FindPrime {
 
     

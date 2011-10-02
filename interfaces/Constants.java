@@ -7,6 +7,8 @@ package interfaces;
 /**
  *
  * @author sojoe
+ * 
+ * Simple interface for holding program constants
  */
 public interface Constants {
     

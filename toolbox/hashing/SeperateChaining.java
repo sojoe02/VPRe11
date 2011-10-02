@@ -8,7 +8,6 @@ import interfaces.Constants;
 import java.util.LinkedList;
 import java.util.List;
 import toolbox.math.FindPrime;
-
 /**
  *
  * @author sojoe
