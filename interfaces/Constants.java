@@ -12,6 +12,6 @@ package interfaces;
  */
 public interface Constants {
     
-    public static int DEFAULT_TABLE_SIZE = 71;
+    public static int DEFAULT_TABLE_SIZE = 7;
     
 }

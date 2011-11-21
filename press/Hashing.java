@@ -24,14 +24,14 @@ import toolbox.hashing.SeperateChaining;
  *
  * @author sojoe
  */
-public class VPR {
+public class Hashing {
 
     public static void main(String args[]) throws FileNotFoundException {
 
         //Path to look for files.
         String testPath="";
 
-
+        //if an argument of searchpath is given.
         if (args.length > 1) {
             testPath = args[1];
         }
@@ -42,7 +42,7 @@ public class VPR {
             String os = System.getProperty("os.name").toLowerCase();
             
             if(os.indexOf( "win" ) >= 0){
-               testPath="C:"; //c drive for windows
+               testPath="C://"; //c drive for windows
             }
             else if(os.indexOf( "nix") >=0 || os.indexOf( "nux") >=0){
                testPath=System.getProperty("user.home"); //homedir for nix user
@@ -152,16 +152,15 @@ public class VPR {
         if (paths.contains(testString)) {
             System.out.print("file found on:\t ");
         }
-
         testtime = System.nanoTime() - testtime;
 
         System.out.println(testtime + " ns");
         try {
             silentTesting(10, chainHashing, quadHashing, hashSet, paths);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(VPR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Hashing.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(VPR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Hashing.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -183,7 +182,6 @@ public class VPR {
             for (int i = 0; i < iteratorValue; i++) {
                 String testString = paths.get(generator.nextInt(paths.size())).toString();
                 
-                System.gc();
 
                 testtime = System.nanoTime();
                 chainHashing.find(testString);
