@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import toolbox.Search;
+import toolbox.SearchFileSystem;
 import toolbox.hashing.QuadraticProbing;
 import toolbox.hashing.SeperateChaining;
 
@@ -52,7 +52,7 @@ public class Hashing {
         //the extensions to look for:
         String pattern[] = {".mp3", ".flac"};
 
-        Search searcher = new Search(pattern);
+        SearchFileSystem searcher = new SearchFileSystem(pattern);
         //Initialize the hashsets:
         SeperateChaining chainHashing = new SeperateChaining<String>();
         QuadraticProbing quadHashing = new QuadraticProbing<String>();

@@ -20,7 +20,8 @@ public class QuickSort {
     public static <AnyType extends Comparable<? super AnyType>> void quicksort(AnyType[] a, int left, int right, int cutoff) {
         if (left + cutoff <= right) {
             AnyType pivot = median3(a, left, right);
-
+            //AnyType pivot = first(a, left, right) ;
+            //AnyType pivot = distinct(a, left, right) ;
             // Begin partitioning
             int i = left, j = right - 1;
             for (;;) {
@@ -44,14 +45,14 @@ public class QuickSort {
             InsertionSort.insertionSort(a, left, right);
         }
     }
-    
+
     /*
      * Same as above just with a default cutoff of 10
      */
     public static <AnyType extends Comparable<? super AnyType>> void quicksort(AnyType[] a, int left, int right) {
         if (left + 3 <= right) {
             AnyType pivot = median3(a, left, right);
-            
+
 
             // Begin partitioning
             int i = left, j = right - 1;
@@ -75,24 +76,22 @@ public class QuickSort {
             InsertionSort.insertionSort(a, left, right);
         }
     }
-    
-    //launch default quicksort with just array:
+
+    //launch default quicksort with just an array:
     public static <AnyType extends Comparable<? super AnyType>> void quicksort(AnyType[] a) {
-        quicksort(a, 0 ,a.length-1);
-    }
-    
-    //launch default quicksort with array and cutoff argument:
-    public static <AnyType extends Comparable<? super AnyType>> void quicksort(AnyType[] a, int cutoff) {
-        quicksort(a, 0 ,a.length-1,cutoff);
+        quicksort(a, 0, a.length - 1);
     }
 
+    //launch default quicksort with array and cutoff argument:
+    public static <AnyType extends Comparable<? super AnyType>> void quicksort(AnyType[] a, int cutoff) {
+        quicksort(a, 0, a.length - 1, cutoff);
+    }
 
     private static <AnyType extends Comparable<? super AnyType>> void swapReferences(AnyType[] a, int i, int j) {
         AnyType tmp = a[i];
         a[i] = a[j];
         a[j] = tmp;
     }
-    
 
     /**
      * Return median of left, center, and right.
@@ -112,5 +111,26 @@ public class QuickSort {
         // Place pivot at position right - 1
         swapReferences(a, center, right - 1);
         return a[ right - 1];
+    }
+
+    private static <AnyType extends Comparable<? super AnyType>> AnyType first(AnyType[] a, int left, int right) {
+        return a[left+1];
+    }
+
+    private static <AnyType extends Comparable<? super AnyType>> AnyType distinct(AnyType[] a, int left, int right) {
+        
+        //look for distint elements:
+        for(int i = 1; i< right-left-1; i++){
+            //return the biggest:
+            if(a[left+i].compareTo(a[left+1+i])>0){
+                return a[left+i];
+            }
+            if(a[left+i].compareTo(a[left+1+i])<0){
+                return a[left+i+1];
+            }
+        }        
+        //if there are none then just return one of them (they are all the same).
+        return a[left];     
+        
     }
 }

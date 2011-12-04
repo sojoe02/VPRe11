@@ -11,13 +11,13 @@ import java.util.ArrayList;
  *
  * @author sojoe
  */
-public class Search {
+public class SearchFileSystem {
 
     String pattern[];
     int count = 0;
     ArrayList paths = new ArrayList<String>();
 
-    public Search(String[] pattern) {
+    public SearchFileSystem(String[] pattern) {
         this.pattern = pattern;
     }
 

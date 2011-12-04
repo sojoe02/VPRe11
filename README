@@ -1,1 +1,4 @@
-This program searches the filetree and returns a list of the results for the extension pattering given.
+This code consists of three parts for the mandatory assignments for VPR fall 2011.
+1: Hashing (main file in press/Hashing.java).
+2: AVL tree (main file in press/TreeTraversal.java).
+3: Sort (main file in press/Sort.java).

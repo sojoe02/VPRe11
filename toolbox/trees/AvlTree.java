@@ -148,7 +148,6 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
         k1.height = Math.max(height(k1.right), k2.height) + 1;
         return k1;
     }
-
     /**
      * Double rotate binary tree node: first left child
      * with its right child; then node k3 with new left child.
@@ -161,7 +160,7 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
     }
     
    private AvlNode<AnyType> doubleWithRightChild(AvlNode<AnyType> k3) {
-        k3.right = rotateWithRightChild(k3.right);
+        k3.right = rotateWithLeftChild(k3.right);
         return rotateWithRightChild(k3);
     }
 
